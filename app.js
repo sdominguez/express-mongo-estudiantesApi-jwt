@@ -1,9 +1,25 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
-const app = express();
 const cors = require('cors');
+require('dotenv').config();
 
+const app = express();
+
+/**
+ * Definición de las opciones de Cors
+ * permite conexiones desde cualquier origen
+ * métodos de HTTP 
+ * Incluye cabecera x-token para pasar el JWT
+ * Expone el encabezado x-token para ser leido desde el cliente
+ */
+const corsOptions = {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-token'], 
+    exposedHeaders: ['x-token']
+  };
+
+app.use(cors(corsOptions)); 
 app.use(express.json());
 
 const mongoDBURI = 'mongodb://localhost:27017/estudiantesDB';
